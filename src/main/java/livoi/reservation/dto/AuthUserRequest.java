@@ -1,10 +1,10 @@
-package livoi.reservation.model.entity;
+package livoi.reservation.dto;
 
+import livoi.reservation.domain.MemberEntity;
+import livoi.reservation.domain.PartnerEntity;
 import lombok.Data;
 
-import java.util.List;
-
-public class AuthEntity {
+public class AuthUserRequest {
 
 
     @Data
@@ -18,14 +18,14 @@ public class AuthEntity {
     public static class signUp {
         private String username;
         private String password;
-        private List<String> roles;
+        private String role;
 
         // SignUp 객체 -> MemberEntity 객체로 변환
         public MemberEntity toMemberEntity() {
             return MemberEntity.builder()
                     .userId(this.username)
                     .userPwd(this.password)
-                    .roles(this.roles)
+                    .role(this.role)
                     .build();
         }
 
@@ -34,7 +34,7 @@ public class AuthEntity {
             return PartnerEntity.builder()
                     .partnerId(this.username)
                     .partnerPwd(this.password)
-                    .roles(this.roles)
+                    .role(this.role)
                     .build();
         }
     }

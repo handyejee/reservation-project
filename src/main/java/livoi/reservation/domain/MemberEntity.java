@@ -1,14 +1,16 @@
-package livoi.reservation.model.entity;
+package livoi.reservation.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 예약 시스템의 사용자를 나타내는 클래스.
@@ -36,8 +38,7 @@ public class MemberEntity implements UserDetails {
 
     private String userPwd;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    private String role;
 
     /**
      * 사용자에게 부여된 권한을 반환. 이 메서드는 UserDetails 인터페이스의 일부.
@@ -47,7 +48,7 @@ public class MemberEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
+        return Stream.of(role.split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }

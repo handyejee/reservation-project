@@ -1,8 +1,8 @@
 package livoi.reservation.service;
 
-import livoi.reservation.model.entity.AuthEntity;
-import livoi.reservation.model.entity.MemberEntity;
-import livoi.reservation.model.repository.MemberRepository;
+import livoi.reservation.dto.AuthUserRequest;
+import livoi.reservation.domain.MemberEntity;
+import livoi.reservation.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +32,7 @@ public class MemberService implements UserDetailsService {
      * @param member AuthEntity.signUp의 인스턴스
      * @return 인코딩 한 값
      */
-    public MemberEntity registerMember(AuthEntity.signUp member){
+    public MemberEntity registerMember(AuthUserRequest.signUp member){
         boolean exists = this.memberRepository.existsByUserId(member.getUsername());
         if (exists){
             throw new RuntimeException("User name already exists.");
@@ -48,7 +48,7 @@ public class MemberService implements UserDetailsService {
      * @param member AuthEntity.signUp의 인스턴스
      * @return user
      */
-    public MemberEntity authenticate(AuthEntity.signIn member){
+    public MemberEntity authenticate(AuthUserRequest.signIn member){
         var user = this.memberRepository.findByUserId(member.getUsername())
                 .orElseThrow(() -> new RuntimeException("User name does not exists."));
 
