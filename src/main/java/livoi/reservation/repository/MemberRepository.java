@@ -1,6 +1,6 @@
-package livoi.reservation.model.repository;
+package livoi.reservation.repository;
 
-import livoi.reservation.model.entity.MemberEntity;
+import livoi.reservation.domain.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
