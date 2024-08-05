@@ -1,4 +1,4 @@
-package livoi.reservation.model.entity;
+package livoi.reservation.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,8 +7,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Builder
 @Getter
@@ -34,15 +34,12 @@ public class PartnerEntity implements UserDetails {
     @Column(name = "partner_pwd")
     private String partnerPwd;
 
-    @OneToMany(mappedBy = "partner")
-    private List<ShopEntity> shops;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles;
+    @Column(name = "role")
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
+        return Stream.of(role.split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }

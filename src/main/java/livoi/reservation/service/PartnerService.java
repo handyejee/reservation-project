@@ -1,8 +1,8 @@
 package livoi.reservation.service;
 
-import livoi.reservation.model.entity.AuthEntity;
-import livoi.reservation.model.entity.PartnerEntity;
-import livoi.reservation.model.repository.PartnerRepository;
+import livoi.reservation.dto.AuthUserRequest;
+import livoi.reservation.domain.PartnerEntity;
+import livoi.reservation.repository.PartnerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +32,7 @@ public class PartnerService implements UserDetailsService {
      * @param partner AuthEntity.signUp의 인스턴스
      * @return 인코딩 한 값
      */
-    public PartnerEntity registerPartner(AuthEntity.signUp partner){
+    public PartnerEntity registerPartner(AuthUserRequest.signUp partner){
         boolean exists = this.partnerRepository.existsByPartnerId(partner.getUsername());
         if (exists){
             throw new RuntimeException("Partner name already exists.");
@@ -49,7 +49,7 @@ public class PartnerService implements UserDetailsService {
      * @param partner AuthEntity.signUp의 인스턴스
      * @return user
      */
-    public PartnerEntity authenticate(AuthEntity.signIn partner){
+    public PartnerEntity authenticate(AuthUserRequest.signIn partner){
         var user = this.partnerRepository.findByPartnerId(partner.getUsername())
                 .orElseThrow(() -> new RuntimeException("Partner name does not exists."));
 
