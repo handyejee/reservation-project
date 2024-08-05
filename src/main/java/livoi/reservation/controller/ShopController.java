@@ -56,6 +56,19 @@ public class ShopController {
     }
 
     /**
+     * 상점 상세 목록을 조회하는 메서드
+     * @param shopId 상점 고유번호를 인자값으로 받아옵니다.
+     * @return 상점 고유번호로 조회한 상점 정보를 반환합니다.
+     */
+    @GetMapping("/shops/{shopId}")
+    public ResponseEntity<ShopResponse> findShop(@PathVariable int shopId){
+        ShopEntity shopEntity = shopService.findById(shopId);
+
+        return ResponseEntity.ok()
+                .body(new ShopResponse(shopEntity));
+    }
+
+    /**
      * 상점을 삭제하는 메서드
      * @param shopId 를 기준으로 삭제합니다.
      * @return 삭제 결과를 반환합니다.

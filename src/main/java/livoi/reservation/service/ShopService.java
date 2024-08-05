@@ -65,6 +65,11 @@ public class ShopService {
         return shopRepository.findAll();
     }
 
+    /**
+     * 상점 상세 조회하는 서비스 메서드
+     * @param shopId 를 이용해 데이터베이스에서 조회합니다
+     * @return 조회한 글을 반환합니다.
+     */
     public ShopEntity findById(int shopId){
         return shopRepository.findById(shopId)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + shopId));
